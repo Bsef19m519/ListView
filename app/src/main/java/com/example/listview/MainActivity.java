@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,29 +43,32 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent(MainActivity.this,MainActivity2.class);
 //                intent.putExtra("position",i);
 //                intent.putExtra("value",arrayList.get(i));
+//                Log.d("*",String.valueOf(i));
 //                startActivity(intent);
 //            }
 //        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Delete Record")
-                        .setMessage("Do you want to delete?")
-                        .setIcon(R.drawable.ic_launcher_background)
-                        .setCancelable(false)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                AlertDialog.Builder builder =new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Delete Record");
+                        builder.setMessage("Do you want to delete?");
+                        builder.setIcon(R.drawable.ic_launcher_background);
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                arrayList.remove(i);
+                                arrayList.remove(position);
                                 arrayAdapter.notifyDataSetChanged();
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                        dialogInterface.dismiss();;
                     }
-                }).show();
+                });
+                        builder.show();
             }
         });
     }
