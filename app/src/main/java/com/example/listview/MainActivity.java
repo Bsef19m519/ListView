@@ -2,8 +2,11 @@ package com.example.listview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         arrayList = new ArrayList<String>();
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
         listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this,MainActivity2.class);
+                intent.putExtra("position",i);
+                intent.putExtra("value",arrayList.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
     public void addFunc(View view) {
